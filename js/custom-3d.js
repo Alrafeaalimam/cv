@@ -476,8 +476,6 @@
 
     if (currentFormAlertType === 'success') {
       alertMsg.textContent = t.form_success || (lang === 'ar' ? 'تم إرسال رسالتك بنجاح! ✅' : 'Your message has been sent successfully! ✅');
-    } else if (currentFormAlertType === 'activation') {
-      alertMsg.textContent = t.form_activation || (lang === 'ar' ? '⚠️ خطوة تفعيل مطلوبة لمرة واحدة: أرسلت خدمة FormSubmit رسالة تفعيل إلى إيميلك (alrafeaalimam@gmail.com). يرجى فتح بريدك (وافحص مجلد Spam/الرسائل غير المرغوب فيها) والضغط على "Activate Form" لتفعيل استلام الرسائل فوراً.' : '⚠️ Activation Required: FormSubmit has sent a verification email to alrafeaalimam@gmail.com. Please open your Gmail (check Spam/Junk folder too) and click "Activate Form" to enable submissions.');
     } else if (currentFormAlertType === 'error') {
       alertMsg.textContent = t.form_error || (lang === 'ar' ? 'حدث خطأ أثناء الإرسال، يُرجى المحاولة مرة أخرى.' : 'Something went wrong. Please try again or reach out directly.');
     }
@@ -538,20 +536,19 @@
 
       var formData = new FormData(form);
       var payload = {
+        access_key: formData.get('access_key') || '54a998b7-82dc-47b8-96ae-ba95e706cb14',
         name: formData.get('name') || '',
-        email: formData.get('_replyto') || '',
-        _replyto: formData.get('_replyto') || '',
-        _subject: formData.get('Subject') || 'New message from CV Portfolio',
-        Subject: formData.get('Subject') || 'New message from CV Portfolio',
+        email: formData.get('email') || formData.get('_replyto') || '',
+        subject: formData.get('subject') || formData.get('Subject') || 'New message from CV Portfolio',
         message: formData.get('message') || '',
-        _captcha: 'false',
-        _template: 'table'
+        from_name: formData.get('from_name') || 'Alrafei Babiker Portfolio'
       };
 
-      var endpoint = form.getAttribute('action') || 'https://formsubmit.co/ajax/alrafeaalimam@gmail.com';
-      if (endpoint.indexOf('/ajax/') === -1) {
-        endpoint = endpoint.replace('formsubmit.co/', 'formsubmit.co/ajax/');
+      if (formData.get('botcheck')) {
+        payload.botcheck = formData.get('botcheck');
       }
+
+      var endpoint = form.getAttribute('action') || 'https://api.web3forms.com/submit';
 
       fetch(endpoint, {
         method: 'POST',
@@ -570,16 +567,10 @@
       })
       .then(function (res) {
         var data = res.data;
-        var msg = (data && data.message) ? String(data.message).toLowerCase() : '';
-        var isActivation = msg.indexOf('activat') !== -1 || msg.indexOf('confirm') !== -1 || msg.indexOf('verification') !== -1;
-
-        if (isActivation) {
-          showAlert('activation', activationText);
-          return;
-        }
 
         if (!res.ok || (data && (data.success === false || data.success === 'false'))) {
-          throw new Error((data && data.message) || ('HTTP error ' + res.status));
+          var serverMsg = (data && data.message) ? data.message : '';
+          throw new Error(serverMsg || ('HTTP error ' + res.status));
         }
 
         showAlert('success', successText);
@@ -587,7 +578,11 @@
       })
       .catch(function (err) {
         console.error('Contact form submission error:', err);
-        showAlert('error', errorText);
+        var customError = errorText;
+        if (err && err.message && err.message.indexOf('HTTP error') === -1) {
+          customError = err.message;
+        }
+        showAlert('error', customError);
       })
       .finally(function () {
         submitBtn.disabled = false;

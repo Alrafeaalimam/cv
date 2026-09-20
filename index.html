@@ -1161,11 +1161,11 @@
               <span id="contact-alert-msg" class="leading-relaxed"></span>
             </div>
 
-            <form id="contact-form" action="https://formsubmit.co/ajax/alrafeaalimam@gmail.com" method="POST" class="space-y-4">
-              <!-- FormSubmit Options -->
-              <input type="text" name="_honey" style="display:none">
-              <input type="hidden" name="_captcha" value="false">
-              <input type="hidden" name="_template" value="table">
+            <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-4">
+              <!-- Web3Forms Configuration -->
+              <input type="hidden" name="access_key" value="54a998b7-82dc-47b8-96ae-ba95e706cb14">
+              <input type="hidden" name="from_name" value="Alrafei Babiker Portfolio">
+              <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -1174,13 +1174,13 @@
                 </div>
                 <div>
                   <label class="block text-xs font-mono text-slate-400 mb-1.5 uppercase tracking-wider" data-i18n="form_email_lbl">Email Address</label>
-                  <input type="email" name="_replyto" required placeholder="name@example.com" data-i18n-placeholder="form_email_ph" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500 transition duration-150" />
+                  <input type="email" name="email" required placeholder="name@example.com" data-i18n-placeholder="form_email_ph" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500 transition duration-150" />
                 </div>
               </div>
 
               <div>
                 <label class="block text-xs font-mono text-slate-400 mb-1.5 uppercase tracking-wider" data-i18n="form_subject_lbl">Subject</label>
-                <input type="text" name="Subject" required placeholder="Project or Opportunity Details" data-i18n-placeholder="form_subject_ph" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500 transition duration-150" />
+                <input type="text" name="subject" required placeholder="Project or Opportunity Details" data-i18n-placeholder="form_subject_ph" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500 transition duration-150" />
               </div>
 
               <div>
@@ -1217,6 +1217,6 @@
     <script src="js/translations.js?ver=3.8.1"></script>
     <script src="js/lucide.min.js"></script>
     <script src="js/three.min.js"></script>
-    <script src="js/custom-3d.js?ver=3.8.1"></script>
+    <script src="js/custom-3d.js?ver=3.8.2"></script>
   </body>
 </html>
