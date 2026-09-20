@@ -1113,7 +1113,18 @@
 
           <!-- Form Card -->
           <div class="lg:col-span-7 linear-card p-6 md:p-8 reveal-card">
-            <form action="https://formsubmit.co/alrafeaalimam@gmail.com" method="POST" class="space-y-4">
+            <!-- In-page Feedback Alert Banner -->
+            <div id="contact-alert" class="hidden p-4 rounded-xl border text-sm font-mono flex items-center gap-3 mb-6 transition-all duration-300">
+              <span id="contact-alert-icon" class="text-base flex-shrink-0"></span>
+              <span id="contact-alert-msg" class="leading-relaxed"></span>
+            </div>
+
+            <form id="contact-form" action="https://formsubmit.co/ajax/alrafeaalimam@gmail.com" method="POST" class="space-y-4">
+              <!-- FormSubmit Options -->
+              <input type="text" name="_honey" style="display:none">
+              <input type="hidden" name="_captcha" value="false">
+              <input type="hidden" name="_template" value="table">
+
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-xs font-mono text-slate-400 mb-1.5 uppercase tracking-wider" data-i18n="form_name_lbl">Your Name</label>
@@ -1135,7 +1146,7 @@
                 <textarea name="message" rows="4" required placeholder="Write your message here..." data-i18n-placeholder="form_msg_ph" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500 transition duration-150 resize-none"></textarea>
               </div>
 
-              <button type="submit" class="btn-emerald w-full !py-3">
+              <button id="contact-submit-btn" type="submit" class="btn-emerald w-full !py-3 flex items-center justify-center gap-2">
                 <i data-lucide="send" class="w-4 h-4"></i>
                 <span data-i18n="form_send_btn">Send Message</span>
               </button>
@@ -1161,9 +1172,9 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="js/translations.js?ver=3.7.0"></script>
+    <script src="js/translations.js?ver=3.8.0"></script>
     <script src="js/lucide.min.js"></script>
     <script src="js/three.min.js"></script>
-    <script src="js/custom-3d.js?ver=3.7.0"></script>
+    <script src="js/custom-3d.js?ver=3.8.0"></script>
   </body>
 </html>

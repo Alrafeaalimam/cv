@@ -158,6 +158,9 @@ window.CV_TRANSLATIONS = {
     "form_msg_lbl": "MESSAGE",
     "form_msg_ph": "Write your message here...",
     "form_send_btn": "Send Message",
+    "form_sending": "Sending Message...",
+    "form_success": "Your message has been sent successfully! ✅",
+    "form_error": "Something went wrong. Please try again or reach out directly.",
 
     // Footer
     "footer_copy": "© 2026 Alrafei Babiker. Designed with Linear & Stripe Aesthetic.",
@@ -319,6 +322,9 @@ window.CV_TRANSLATIONS = {
     "form_msg_lbl": "نص الرسالة",
     "form_msg_ph": "اكتب رسالتك هنا بالتفصيل...",
     "form_send_btn": "إرسال الرسالة",
+    "form_sending": "جاري إرسال الرسالة...",
+    "form_success": "تم إرسال رسالتك بنجاح! ✅",
+    "form_error": "حدث خطأ أثناء الإرسال، يُرجى المحاولة مرة أخرى.",
 
     // Footer
     "footer_copy": "© 2026 الرفيع بابكر. صُمم وفق معايير Linear & Stripe الداكنة.",

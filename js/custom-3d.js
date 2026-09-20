@@ -79,6 +79,9 @@
       localStorage.setItem('cv_lang', lang);
     } catch (e) {}
 
+    // Update form alert language if currently visible
+    updateAlertLanguage(lang);
+
     // Re-render any dynamically affected icons
     initIcons();
   }
@@ -461,12 +464,132 @@
   }
 
   /* ==========================================================================
+     8. Contact Form AJAX Submission (No Redirects)
+     ========================================================================== */
+  var currentFormAlertType = null;
+
+  function updateAlertLanguage(lang) {
+    if (!currentFormAlertType) return;
+    var t = window.CV_TRANSLATIONS && window.CV_TRANSLATIONS[lang];
+    var alertMsg = document.getElementById('contact-alert-msg');
+    if (!t || !alertMsg) return;
+
+    if (currentFormAlertType === 'success') {
+      alertMsg.textContent = t.form_success || (lang === 'ar' ? 'تم إرسال رسالتك بنجاح! ✅' : 'Your message has been sent successfully! ✅');
+    } else if (currentFormAlertType === 'error') {
+      alertMsg.textContent = t.form_error || (lang === 'ar' ? 'حدث خطأ أثناء الإرسال، يُرجى المحاولة مرة أخرى.' : 'Something went wrong. Please try again or reach out directly.');
+    }
+  }
+
+  function initContactForm() {
+    var form = document.getElementById('contact-form');
+    var alertBox = document.getElementById('contact-alert');
+    var alertMsg = document.getElementById('contact-alert-msg');
+    var alertIcon = document.getElementById('contact-alert-icon');
+    var submitBtn = document.getElementById('contact-submit-btn');
+
+    if (!form || !submitBtn) return;
+
+    function showAlert(type, message) {
+      if (!alertBox || !alertMsg) return;
+      currentFormAlertType = type;
+
+      alertBox.className = "p-4 rounded-xl border text-sm font-mono flex items-center gap-3 mb-6 transition-all duration-300";
+      if (type === 'success') {
+        alertBox.classList.add('bg-emerald-950/50', 'border-emerald-500/50', 'text-emerald-300');
+        if (alertIcon) alertIcon.innerHTML = '<i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0"></i>';
+      } else {
+        alertBox.classList.add('bg-rose-950/50', 'border-rose-500/50', 'text-rose-300');
+        if (alertIcon) alertIcon.innerHTML = '<i data-lucide="alert-circle" class="w-5 h-5 text-rose-400 shrink-0"></i>';
+      }
+      alertMsg.textContent = message;
+      alertBox.classList.remove('hidden');
+      initIcons();
+
+      try {
+        alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (e) {}
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var currentLang = document.documentElement.lang || 'en';
+      var t = (window.CV_TRANSLATIONS && window.CV_TRANSLATIONS[currentLang]) || {};
+
+      var sendingText = (t && t.form_sending) || (currentLang === 'ar' ? 'جاري إرسال الرسالة...' : 'Sending Message...');
+      var successText = (t && t.form_success) || (currentLang === 'ar' ? 'تم إرسال رسالتك بنجاح! ✅' : 'Your message has been sent successfully! ✅');
+      var errorText = (t && t.form_error) || (currentLang === 'ar' ? 'حدث خطأ أثناء الإرسال، يُرجى المحاولة مرة أخرى.' : 'Something went wrong. Please try again or reach out directly.');
+
+      // Hide previous alert
+      if (alertBox) alertBox.classList.add('hidden');
+      currentFormAlertType = null;
+
+      // Loading state on submit button
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+      submitBtn.innerHTML = '<svg class="animate-spin inline-block w-4 h-4 mr-2 rtl:ml-2 rtl:mr-0 text-slate-950" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg><span>' + sendingText + '</span>';
+
+      var formData = new FormData(form);
+      var payload = {
+        name: formData.get('name') || '',
+        email: formData.get('_replyto') || '',
+        _replyto: formData.get('_replyto') || '',
+        _subject: formData.get('Subject') || 'New message from CV Portfolio',
+        Subject: formData.get('Subject') || 'New message from CV Portfolio',
+        message: formData.get('message') || '',
+        _captcha: 'false',
+        _template: 'table'
+      };
+
+      var endpoint = form.getAttribute('action') || 'https://formsubmit.co/ajax/alrafeaalimam@gmail.com';
+      if (endpoint.indexOf('/ajax/') === -1) {
+        endpoint = endpoint.replace('formsubmit.co/', 'formsubmit.co/ajax/');
+      }
+
+      fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error('HTTP error ' + response.status);
+        }
+        return response.json();
+      })
+      .then(function (data) {
+        if (data && (data.success === false || data.success === 'false')) {
+          throw new Error(data.message || 'Submission rejected');
+        }
+        showAlert('success', successText);
+        form.reset();
+      })
+      .catch(function (err) {
+        console.error('Contact form submission error:', err);
+        showAlert('error', errorText);
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+        var btnText = (t && t.form_send_btn) || (currentLang === 'ar' ? 'إرسال الرسالة' : 'Send Message');
+        submitBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i><span data-i18n="form_send_btn">' + btnText + '</span>';
+        initIcons();
+      });
+    });
+  }
+
+  /* ==========================================================================
      Bootstrap on Ready
      ========================================================================== */
   function ready() {
     initIcons();
     initLanguageSwitcher();
     initMobileMenu();
+    initContactForm();
     initTiltEngine();
     initScrollReveal();
     initSkillRings();
