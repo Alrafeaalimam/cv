@@ -37,7 +37,7 @@
     var btnAr = document.getElementById('lang-ar');
 
     if (lang === 'ar') {
-      document.title = "الرفيع بابكر — مهندس برمجيات ومطور Full-Stack";
+      document.title = "الرفيع بابكر (الرفيع الإمام) | مطور Full-Stack";
       body.classList.add('font-arabic');
       body.classList.remove('font-sans');
       if (btnAr) {
@@ -47,7 +47,7 @@
         btnEn.className = "px-2.5 py-1 rounded-lg transition-all font-semibold lang-btn text-slate-400 hover:text-slate-200";
       }
     } else {
-      document.title = "Alrafei Babiker — Software Engineer & Full-Stack Developer";
+      document.title = "Alrafei Babiker (الرفيع الإمام) | Full-Stack Developer";
       body.classList.add('font-sans');
       body.classList.remove('font-arabic');
       if (btnEn) {
