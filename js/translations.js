@@ -160,6 +160,7 @@ window.CV_TRANSLATIONS = {
     "form_send_btn": "Send Message",
     "form_sending": "Sending Message...",
     "form_success": "Your message has been sent successfully! ✅",
+    "form_activation": "⚠️ Activation Required: FormSubmit has sent a verification email to alrafeaalimam@gmail.com. Please open your Gmail (check Spam/Junk folder too) and click 'Activate Form' to enable submissions.",
     "form_error": "Something went wrong. Please try again or reach out directly.",
 
     // Footer
@@ -324,6 +325,7 @@ window.CV_TRANSLATIONS = {
     "form_send_btn": "إرسال الرسالة",
     "form_sending": "جاري إرسال الرسالة...",
     "form_success": "تم إرسال رسالتك بنجاح! ✅",
+    "form_activation": "⚠️ خطوة تفعيل مطلوبة لمرة واحدة: أرسلت خدمة FormSubmit رسالة تفعيل إلى إيميلك (alrafeaalimam@gmail.com). يرجى فتح بريدك (وافحص مجلد Spam/الرسائل غير المرغوب فيها) والضغط على 'Activate Form' لتفعيل استلام الرسائل فوراً.",
     "form_error": "حدث خطأ أثناء الإرسال، يُرجى المحاولة مرة أخرى.",
 
     // Footer

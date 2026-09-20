@@ -476,6 +476,8 @@
 
     if (currentFormAlertType === 'success') {
       alertMsg.textContent = t.form_success || (lang === 'ar' ? 'تم إرسال رسالتك بنجاح! ✅' : 'Your message has been sent successfully! ✅');
+    } else if (currentFormAlertType === 'activation') {
+      alertMsg.textContent = t.form_activation || (lang === 'ar' ? '⚠️ خطوة تفعيل مطلوبة لمرة واحدة: أرسلت خدمة FormSubmit رسالة تفعيل إلى إيميلك (alrafeaalimam@gmail.com). يرجى فتح بريدك (وافحص مجلد Spam/الرسائل غير المرغوب فيها) والضغط على "Activate Form" لتفعيل استلام الرسائل فوراً.' : '⚠️ Activation Required: FormSubmit has sent a verification email to alrafeaalimam@gmail.com. Please open your Gmail (check Spam/Junk folder too) and click "Activate Form" to enable submissions.');
     } else if (currentFormAlertType === 'error') {
       alertMsg.textContent = t.form_error || (lang === 'ar' ? 'حدث خطأ أثناء الإرسال، يُرجى المحاولة مرة أخرى.' : 'Something went wrong. Please try again or reach out directly.');
     }
@@ -498,6 +500,9 @@
       if (type === 'success') {
         alertBox.classList.add('bg-emerald-950/50', 'border-emerald-500/50', 'text-emerald-300');
         if (alertIcon) alertIcon.innerHTML = '<i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0"></i>';
+      } else if (type === 'activation') {
+        alertBox.classList.add('bg-amber-950/50', 'border-amber-500/50', 'text-amber-300');
+        if (alertIcon) alertIcon.innerHTML = '<i data-lucide="mail-check" class="w-5 h-5 text-amber-400 shrink-0"></i>';
       } else {
         alertBox.classList.add('bg-rose-950/50', 'border-rose-500/50', 'text-rose-300');
         if (alertIcon) alertIcon.innerHTML = '<i data-lucide="alert-circle" class="w-5 h-5 text-rose-400 shrink-0"></i>';
@@ -519,6 +524,7 @@
 
       var sendingText = (t && t.form_sending) || (currentLang === 'ar' ? 'جاري إرسال الرسالة...' : 'Sending Message...');
       var successText = (t && t.form_success) || (currentLang === 'ar' ? 'تم إرسال رسالتك بنجاح! ✅' : 'Your message has been sent successfully! ✅');
+      var activationText = (t && t.form_activation) || (currentLang === 'ar' ? '⚠️ خطوة تفعيل مطلوبة لمرة واحدة: أرسلت خدمة FormSubmit رسالة تفعيل إلى إيميلك (alrafeaalimam@gmail.com). يرجى فتح بريدك (وافحص مجلد Spam/الرسائل غير المرغوب فيها) والضغط على "Activate Form" لتفعيل استلام الرسائل فوراً.' : '⚠️ Activation Required: FormSubmit has sent a verification email to alrafeaalimam@gmail.com. Please open your Gmail (check Spam/Junk folder too) and click "Activate Form" to enable submissions.');
       var errorText = (t && t.form_error) || (currentLang === 'ar' ? 'حدث خطأ أثناء الإرسال، يُرجى المحاولة مرة أخرى.' : 'Something went wrong. Please try again or reach out directly.');
 
       // Hide previous alert
@@ -556,15 +562,26 @@
         body: JSON.stringify(payload)
       })
       .then(function (response) {
-        if (!response.ok) {
-          throw new Error('HTTP error ' + response.status);
-        }
-        return response.json();
+        return response.json().then(function (data) {
+          return { ok: response.ok, status: response.status, data: data };
+        }).catch(function () {
+          return { ok: response.ok, status: response.status, data: null };
+        });
       })
-      .then(function (data) {
-        if (data && (data.success === false || data.success === 'false')) {
-          throw new Error(data.message || 'Submission rejected');
+      .then(function (res) {
+        var data = res.data;
+        var msg = (data && data.message) ? String(data.message).toLowerCase() : '';
+        var isActivation = msg.indexOf('activat') !== -1 || msg.indexOf('confirm') !== -1 || msg.indexOf('verification') !== -1;
+
+        if (isActivation) {
+          showAlert('activation', activationText);
+          return;
         }
+
+        if (!res.ok || (data && (data.success === false || data.success === 'false'))) {
+          throw new Error((data && data.message) || ('HTTP error ' + res.status));
+        }
+
         showAlert('success', successText);
         form.reset();
       })
