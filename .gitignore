@@ -1,0 +1,9 @@
+# Temporary & log files
+server.log
+serve.py
+*.bak
+.DS_Store
+__pycache__/
+scripts/
+*.swp
+*~

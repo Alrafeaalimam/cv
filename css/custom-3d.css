@@ -1,0 +1,360 @@
+/* ==========================================================================
+   Design System — Alrafei CV (Linear & Stripe Inspired Dark Minimalist Aesthetic)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap');
+
+:root {
+  --bg-base: #020617;        /* Slate-950 */
+  --bg-surface: #0f172a;     /* Slate-900 */
+  --border-subtle: #1e293b;  /* Slate-800 */
+  --border-hover: #334155;   /* Slate-700 */
+  --primary-accent: #10b981; /* Emerald-500 */
+  --secondary-accent: #6366f1; /* Indigo-500 */
+  --text-primary: #f1f5f9;   /* Slate-100 */
+  --text-secondary: #94a3b8; /* Slate-400 */
+  --radius-card: 16px;       /* rounded-2xl */
+  --radius-btn: 12px;        /* rounded-xl */
+}
+
+/* Base resets & typography */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Font helpers */
+.font-mono {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.font-arabic {
+  font-family: 'Tajawal', sans-serif !important;
+}
+
+/* Three.js Background Canvas */
+#hero-three-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.45;
+}
+
+/* Subtle background dot grid */
+.bg-grid-pattern {
+  background-image: radial-gradient(#334155 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* --------------------------------------------------------------------------
+   Motion & Micro-interactions (Linear-spec)
+   -------------------------------------------------------------------------- */
+
+/* Scroll-reveal: fade + translateY(20px) -> 0, 400ms */
+.reveal-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 400ms ease-out, transform 400ms ease-out;
+  will-change: opacity, transform;
+}
+
+.reveal-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Linear-style Card Base */
+.linear-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 180ms ease-out,
+              box-shadow 180ms ease-out;
+  will-change: transform, border-color, box-shadow;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.linear-card:hover {
+  transform: scale(1.02);
+  border-color: var(--border-hover);
+  box-shadow: 0 16px 32px -12px rgba(0, 0, 0, 0.6),
+              0 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Subtle Card Tilt (Max ±6deg as per design.md) */
+.tilt-enabled {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   Components & Buttons
+   -------------------------------------------------------------------------- */
+
+/* Primary Emerald Button */
+.btn-emerald {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #10b981;
+  color: #020617 !important;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 22px;
+  border-radius: var(--radius-btn);
+  border: 1px solid transparent;
+  transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(16, 185, 129, 0.2);
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+.btn-emerald:hover {
+  background-color: #34d399;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+  color: #020617 !important;
+}
+
+.btn-emerald:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(16, 185, 129, 0.2);
+}
+
+/* Secondary Ghost/Outline Button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: rgba(15, 23, 42, 0.8);
+  color: var(--text-primary) !important;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 10px 22px;
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--border-subtle);
+  transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  background-color: #1e293b;
+  border-color: var(--border-hover);
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.btn-ghost:active {
+  transform: scale(0.98);
+}
+
+/* Small Verify Button */
+.btn-verify {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #34d399 !important;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  transition: all 150ms ease;
+  text-decoration: none !important;
+}
+
+.btn-verify:hover {
+  background-color: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+/* Minimal Badge / Tag */
+.badge-tech {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: rgba(30, 41, 59, 0.85);
+  color: var(--text-secondary);
+  border: 1px solid rgba(51, 65, 85, 0.6);
+  border-radius: 9999px;
+  padding: 3px 10px;
+  font-size: 11.5px;
+  font-weight: 500;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.linear-card:hover .badge-tech {
+  border-color: rgba(16, 185, 129, 0.35);
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Skill Rings (Thin stroke 4px, Emerald gradient, JetBrains Mono)
+   -------------------------------------------------------------------------- */
+.skill-ring-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+
+.skill-ring-svg {
+  width: 80px;
+  height: 80px;
+  transform: rotate(-90deg);
+}
+
+.skill-ring-bg {
+  stroke: #1e293b;
+  stroke-width: 4px;
+  fill: none;
+}
+
+.skill-ring-progress {
+  stroke: #10b981;
+  stroke: url(#emeraldGradient) #10b981;
+  stroke-width: 4px;
+  stroke-linecap: round;
+  fill: none;
+  stroke-dasharray: 226.19;
+  stroke-dashoffset: 226.19;
+  transition: stroke-dashoffset 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: stroke-dashoffset;
+}
+
+.skill-ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.skill-ring-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  margin-bottom: 2px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.linear-card:hover .skill-ring-icon {
+  transform: scale(1.15);
+}
+
+.skill-percent-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.3px;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Adjustments & Navigation Drawer
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .section-py {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+}
+
+/* Mobile Navigation Backdrop */
+.mobile-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(2, 6, 23, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-menu-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mobile Navigation Drawer */
+.mobile-menu-drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 290px;
+  max-width: 85vw;
+  background-color: #020617;
+  border-left: 1px solid rgba(30, 41, 59, 0.9);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6);
+  transform: translateX(100%);
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+
+html[dir="rtl"] .mobile-menu-drawer {
+  right: auto;
+  left: 0;
+  border-left: none;
+  border-right: 1px solid rgba(30, 41, 59, 0.9);
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
+  transform: translateX(-100%);
+}
+
+.mobile-menu-drawer.open {
+  transform: translateX(0) !important;
+}

@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alrafei Babiker — Software Engineer &amp; Full-Stack Developer</title>
+
+    <!-- Google Fonts: Inter, Tajawal, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS (Offline Local + CDN fallback) -->
+    <script src="js/tailwind.min.js"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              slate: {
+                950: '#020617',
+                900: '#0f172a',
+                850: '#131f37',
+                800: '#1e293b',
+                700: '#334155',
+                400: '#94a3b8',
+                100: '#f1f5f9',
+              },
+              emerald: {
+                400: '#34d399',
+                500: '#10b981',
+                600: '#059669',
+              },
+              indigo: {
+                400: '#818cf8',
+                500: '#6366f1',
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              arabic: ['Tajawal', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Linear/Stripe Design System Stylesheet -->
+    <link href="css/custom-3d.css?ver=3.7.0" rel="stylesheet" />
+  </head>
+
+  <body class="bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500/20 selection:text-emerald-400 min-h-screen">
+    <!-- SVG Defs for Gradients -->
+    <svg style="position: absolute; width: 0; height: 0; pointer-events: none; overflow: hidden;" aria-hidden="true">
+      <defs>
+        <linearGradient id="emeraldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#10b981" />
+          <stop offset="100%" stop-color="#34d399" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <!-- Navigation (Linear Minimalist Bar) -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+      <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="#top" class="flex items-center gap-2.5 font-mono font-semibold text-sm tracking-wide text-slate-100 group">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 group-hover:animate-ping"></span>
+          <span>alrafei<span class="text-emerald-400">.dev</span></span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-400">
+          <a href="#about" class="hover:text-slate-100 transition-colors" data-i18n="nav_about">About</a>
+          <a href="#skills" class="hover:text-slate-100 transition-colors" data-i18n="nav_skills">Skills</a>
+          <a href="#projects" class="hover:text-slate-100 transition-colors" data-i18n="nav_projects">Projects</a>
+          <a href="#experience" class="hover:text-slate-100 transition-colors" data-i18n="nav_experience">Experience</a>
+          <a href="#certifications" class="hover:text-slate-100 transition-colors" data-i18n="nav_certifications">Certificates</a>
+          <a href="#testimonials" class="hover:text-slate-100 transition-colors" data-i18n="nav_testimonials">References</a>
+        </nav>
+
+        <div class="flex items-center gap-2.5 sm:gap-3">
+          <!-- Language Toggle Switcher (EN | عربي) -->
+          <div class="flex items-center bg-slate-900 border border-slate-800 rounded-xl p-0.5 text-xs font-mono shadow-inner">
+            <button id="lang-en" type="button" class="px-2.5 py-1 rounded-lg transition-all font-semibold lang-btn active-lang bg-emerald-500 text-slate-950 shadow-sm" title="Switch to English">EN</button>
+            <button id="lang-ar" type="button" class="px-2.5 py-1 rounded-lg transition-all font-semibold lang-btn text-slate-400 hover:text-slate-200" title="التبديل إلى العربية">عربي</button>
+          </div>
+
+          <a href="#contact" class="hidden sm:inline-flex btn-emerald text-xs !py-2 !px-4">
+            <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+            <span data-i18n="nav_contact">Get in Touch</span>
+          </a>
+
+          <!-- Mobile Hamburger Toggle Button -->
+          <button id="mobile-menu-toggle" type="button" class="md:hidden w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-slate-100 hover:border-slate-700 flex items-center justify-center transition duration-150 focus:outline-none shrink-0" aria-label="Toggle Navigation Menu">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer & Backdrop -->
+    <div id="mobile-menu-backdrop" class="mobile-menu-backdrop" aria-hidden="true"></div>
+
+    <aside id="mobile-menu-drawer" class="mobile-menu-drawer" role="dialog" aria-modal="true" aria-label="Navigation Menu">
+      <!-- Drawer Header -->
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800/80">
+        <a href="#top" class="mobile-nav-link flex items-center gap-2 font-mono font-semibold text-sm text-slate-100">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>alrafei<span class="text-emerald-400">.dev</span></span>
+        </a>
+        <button id="mobile-menu-close" type="button" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-100 flex items-center justify-center transition-colors" aria-label="Close Navigation Menu">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="flex flex-col gap-1.5 py-6">
+        <a href="#about" class="mobile-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-emerald-400 hover:bg-slate-900/80 transition-colors font-medium text-sm">
+          <i data-lucide="user" class="w-4 h-4 text-emerald-400"></i>
+          <span data-i18n="nav_about">About</span>
+        </a>
+        <a href="#skills" class="mobile-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-emerald-400 hover:bg-slate-900/80 transition-colors font-medium text-sm">
+          <i data-lucide="cpu" class="w-4 h-4 text-emerald-400"></i>
+          <span data-i18n="nav_skills">Skills</span>
+        </a>
+        <a href="#projects" class="mobile-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-emerald-400 hover:bg-slate-900/80 transition-colors font-medium text-sm">
+          <i data-lucide="folder-git-2" class="w-4 h-4 text-emerald-400"></i>
+          <span data-i18n="nav_projects">Projects</span>
+        </a>
+        <a href="#experience" class="mobile-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-emerald-400 hover:bg-slate-900/80 transition-colors font-medium text-sm">
+          <i data-lucide="briefcase" class="w-4 h-4 text-emerald-400"></i>
+          <span data-i18n="nav_experience">Experience</span>
+        </a>
+        <a href="#certifications" class="mobile-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-emerald-400 hover:bg-slate-900/80 transition-colors font-medium text-sm">
+          <i data-lucide="award" class="w-4 h-4 text-emerald-400"></i>
+          <span data-i18n="nav_certifications">Certificates</span>
+        </a>
+        <a href="#testimonials" class="mobile-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-emerald-400 hover:bg-slate-900/80 transition-colors font-medium text-sm">
+          <i data-lucide="quote" class="w-4 h-4 text-emerald-400"></i>
+          <span data-i18n="nav_testimonials">References</span>
+        </a>
+        <a href="#contact" class="mobile-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-emerald-400 hover:bg-slate-900/80 transition-colors font-medium text-sm">
+          <i data-lucide="message-square" class="w-4 h-4 text-emerald-400"></i>
+          <span data-i18n="nav_contact">Get in Touch</span>
+        </a>
+      </nav>
+
+      <!-- Drawer Footer -->
+      <div class="pt-4 border-t border-slate-800/80 space-y-3">
+        <a href="#contact" class="mobile-nav-link btn-emerald w-full justify-center !py-2.5">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span data-i18n="hero_hire">Hire Me</span>
+        </a>
+        <div class="text-center text-xs font-mono text-slate-400">
+          alrafeaalimam@gmail.com
+        </div>
+      </div>
+    </aside>
+
+    <!-- Hero Section with Three.js Canvas -->
+    <section id="top" class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden border-b border-slate-800/80 bg-grid-pattern">
+      <!-- Three.js Ambient Wireframe Canvas -->
+      <canvas id="hero-three-canvas"></canvas>
+
+      <div class="max-w-6xl mx-auto px-6 relative z-10">
+        <div class="max-w-3xl">
+          <!-- Availability Badge -->
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300 mb-6 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span data-i18n="hero_badge">Available for Select Software &amp; AI Engineering Roles</span>
+          </div>
+
+          <!-- Hero Identity -->
+          <div class="flex items-center gap-5 mb-6">
+            <div class="relative group shrink-0">
+              <div class="w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border-2 border-slate-800 p-0.5 bg-slate-900 shadow-xl group-hover:border-emerald-500/50 transition duration-300">
+                <img src="images/anthony.jpg" alt="Alrafei Babiker" class="w-full h-full object-cover rounded-xl" />
+              </div>
+              <span class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-slate-950 flex items-center justify-center">
+                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+              </span>
+            </div>
+            <div>
+              <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-slate-100 mb-1" data-i18n="hero_name">
+                Alrafei Babiker
+              </h1>
+              <p class="text-emerald-400 font-mono text-sm md:text-base" data-i18n="hero_role">
+                Full-Stack Developer &amp; AI Systems Engineer
+              </p>
+            </div>
+          </div>
+
+          <p class="text-slate-400 text-base md:text-lg leading-relaxed mb-8 max-w-2xl font-sans" data-i18n="hero_desc">
+            Specializing in modern web applications, scalable mobile development with Flutter, and production AI integrations via Groq API and LLMs. Engineering reliable, elegant, and secure digital software.
+          </p>
+
+          <!-- Actions -->
+          <div class="flex flex-wrap items-center gap-4 mb-10">
+            <a href="#contact" class="btn-emerald">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span data-i18n="hero_hire">Hire Me</span>
+            </a>
+          </div>
+
+          <!-- Social Links (All Icons with Crisp 2px SVG paths matching Lucide styling) -->
+          <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-800/80">
+            <span class="text-xs font-mono text-slate-400 uppercase tracking-wider shrink-0" data-i18n="hero_connect">Connect:</span>
+            <div class="flex items-center flex-wrap gap-2 sm:gap-2.5">
+              <!-- GitHub -->
+              <a href="https://github.com/Alrafeaalimam" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-100 hover:border-slate-700 transition duration-150 flex items-center justify-center shrink-0" title="GitHub">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                  <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                </svg>
+              </a>
+
+              <!-- LinkedIn -->
+              <a href="https://www.linkedin.com/in/alrafea-alimamali-mustafa-727635421" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-100 hover:border-slate-700 transition duration-150 flex items-center justify-center shrink-0" title="LinkedIn">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect width="4" height="12" x="2" y="9"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+              </a>
+
+              <!-- Twitter / X -->
+              <a href="https://x.com/AliAlrafea?t=9ATUQSFYN2O2PAlLKUfnmw&s=09" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-100 hover:border-slate-700 transition duration-150 flex items-center justify-center shrink-0" title="Twitter / X">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                  <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+                </svg>
+              </a>
+
+              <!-- Facebook -->
+              <a href="https://www.facebook.com/alrafeaalimam" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-100 hover:border-slate-700 transition duration-150 flex items-center justify-center shrink-0" title="Facebook">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                </svg>
+              </a>
+
+              <!-- Instagram -->
+              <a href="https://www.instagram.com/alrafea_alimam?igsh=ZHA3dHlnZmd5dDV4" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-100 hover:border-slate-700 transition duration-150 flex items-center justify-center shrink-0" title="Instagram">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+                </svg>
+              </a>
+
+              <!-- Email -->
+              <a href="mailto:alrafeaalimam@gmail.com" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-100 hover:border-slate-700 transition duration-150 flex items-center justify-center shrink-0" title="Email">
+                <i data-lucide="mail" class="w-4 h-4"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 md:py-24 border-b border-slate-800/80">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-7 space-y-4">
+            <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest">
+              <i data-lucide="user" class="w-4 h-4"></i>
+              <span data-i18n="about_tag">Engineering Background</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-100" data-i18n="about_title">
+              Building robust systems with precision &amp; modern architecture.
+            </h2>
+            <p class="text-slate-400 leading-relaxed font-sans" data-i18n="about_p1">
+              I am a Software Engineer and Full-Stack Developer with hands-on expertise in designing and maintaining responsive web platforms, mobile applications with Flutter, and intelligent API workflows.
+            </p>
+            <p class="text-slate-400 leading-relaxed font-sans" data-i18n="about_p2">
+              My engineering approach prioritizes clean architecture, intuitive user experience, and secure data handling. From architecting e-commerce platforms and automated WhatsApp integrations with Groq API, to conducting security vulnerability audits and deep learning intrusion detection research, I focus on delivering scalable, battle-tested software.
+            </p>
+          </div>
+
+          <!-- Quick Info Card -->
+          <div class="lg:col-span-5 linear-card p-6 reveal-card">
+            <h3 class="text-sm font-mono uppercase tracking-wider text-slate-400 mb-5 flex items-center gap-2">
+              <i data-lucide="info" class="w-4 h-4 text-emerald-400"></i>
+              <span data-i18n="about_specs_title">Quick Specifications</span>
+            </h3>
+            <div class="space-y-3.5 text-sm font-sans">
+              <div class="flex items-center justify-between py-2 border-b border-slate-800/60">
+                <span class="text-slate-400" data-i18n="about_age_lbl">Age:</span>
+                <span class="font-mono text-slate-200">26</span>
+              </div>
+              <div class="flex items-center justify-between py-2 border-b border-slate-800/60">
+                <span class="text-slate-400" data-i18n="about_email_lbl">Email:</span>
+                <a href="mailto:alrafeaalimam@gmail.com" class="font-mono text-emerald-400 hover:underline">alrafeaalimam@gmail.com</a>
+              </div>
+              <div class="flex items-center justify-between py-2 border-b border-slate-800/60">
+                <span class="text-slate-400" data-i18n="about_phone_lbl">Phone:</span>
+                <a href="tel:+249115715672" class="font-mono text-slate-200 hover:text-emerald-400" dir="ltr">+249 115 715 672</a>
+              </div>
+              <div class="flex items-center justify-between py-2 border-b border-slate-800/60">
+                <span class="text-slate-400" data-i18n="about_loc_lbl">Location:</span>
+                <span class="text-slate-200" data-i18n="about_loc_val">Al-Gezira, Sudan</span>
+              </div>
+              <div class="flex items-center justify-between py-2">
+                <span class="text-slate-400" data-i18n="about_lang_lbl">Languages:</span>
+                <span class="text-slate-200 font-mono text-xs" data-i18n="about_lang_val">Arabic (Native), English (Prof.)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section with Thin 4px SVG Rings -->
+    <section id="skills" class="py-16 md:py-24 border-b border-slate-800/80">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center justify-between mb-12">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest mb-1">
+              <i data-lucide="cpu" class="w-4 h-4"></i>
+              <span data-i18n="skills_tag">Technical Proficiency</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-100" data-i18n="skills_title">Engineering Skills &amp; Stack</h2>
+          </div>
+          <span class="hidden md:inline-flex text-xs font-mono text-slate-400 border border-slate-800 bg-slate-900/60 px-3 py-1.5 rounded-lg" data-i18n="skills_badge">
+            Animated fill on scroll
+          </span>
+        </div>
+
+        <!-- 1. Frontend -->
+        <div class="mb-10">
+          <h3 class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
+            <i data-lucide="layout" class="w-4 h-4 text-emerald-400"></i>
+            <span data-i18n="skills_frontend">Frontend &amp; UI Systems</span>
+          </h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            <!-- HTML5 -->
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="95">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/html5.svg" class="skill-ring-icon" alt="HTML5" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">HTML5</div>
+              <span class="badge-tech !text-[10px]">Semantic / DOM</span>
+            </div>
+
+            <!-- CSS3 -->
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="90">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/css3.svg" class="skill-ring-icon" alt="CSS3" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">CSS3</div>
+              <span class="badge-tech !text-[10px]">Modern Flex/Grid</span>
+            </div>
+
+            <!-- JavaScript -->
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="88">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/javascript.svg" class="skill-ring-icon" alt="JavaScript" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">JavaScript</div>
+              <span class="badge-tech !text-[10px]">ES6+ / Async</span>
+            </div>
+
+            <!-- SASS -->
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="82">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/sass.svg" class="skill-ring-icon" alt="SASS" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">SASS / SCSS</div>
+              <span class="badge-tech !text-[10px]">Preprocessors</span>
+            </div>
+
+            <!-- Bootstrap -->
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="90">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/bootstrap.svg" class="skill-ring-icon" alt="Bootstrap" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Bootstrap</div>
+              <span class="badge-tech !text-[10px]">Framework</span>
+            </div>
+
+            <!-- Photoshop -->
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="80">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/photoshop.svg" class="skill-ring-icon" alt="Photoshop" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Photoshop</div>
+              <span class="badge-tech !text-[10px]">Asset / UI Design</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Backend & Mobile -->
+        <div class="mb-10">
+          <h3 class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
+            <i data-lucide="server" class="w-4 h-4 text-emerald-400"></i>
+            <span data-i18n="skills_backend">Backend, Databases &amp; Mobile</span>
+          </h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="86">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/nodejs.svg" class="skill-ring-icon" alt="Node.js" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Node.js</div>
+              <span class="badge-tech !text-[10px]">Event-driven Runtime</span>
+            </div>
+
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="85">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/express.svg" class="skill-ring-icon" alt="Express.js" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Express.js</div>
+              <span class="badge-tech !text-[10px]">RESTful APIs</span>
+            </div>
+
+            <!-- Python -->
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="65">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/python.svg" class="skill-ring-icon" alt="Python" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Python</div>
+              <span class="badge-tech !text-[10px]">Backend / Scripting</span>
+            </div>
+
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="88">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/firebase.svg" class="skill-ring-icon" alt="Firebase" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Firebase</div>
+              <span class="badge-tech !text-[10px]">Firestore &amp; Auth</span>
+            </div>
+
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="84">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/flutter.svg" class="skill-ring-icon" alt="Flutter" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Flutter / Dart</div>
+              <span class="badge-tech !text-[10px]">Cross-Platform App</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. APIs & Cloud Integrations -->
+        <div class="mb-10">
+          <h3 class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
+            <i data-lucide="zap" class="w-4 h-4 text-indigo-400"></i>
+            <span data-i18n="skills_apis">APIs &amp; Cloud Integrations</span>
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="90">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/groq.svg" class="skill-ring-icon" alt="Groq API" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Groq API (LLM + Whisper)</div>
+              <span class="badge-tech !text-[10px]">Ultra-fast Streaming</span>
+            </div>
+
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="88">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/whatsapp.svg" class="skill-ring-icon" alt="WhatsApp API" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">WhatsApp Baileys API</div>
+              <span class="badge-tech !text-[10px]">Socket Automation</span>
+            </div>
+
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="85">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/onesignal.svg" class="skill-ring-icon" alt="OneSignal" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">OneSignal Notifications</div>
+              <span class="badge-tech !text-[10px]">Cloud Push Delivery</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Security, Environment & Core -->
+        <div>
+          <h3 class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
+            <i data-lucide="shield" class="w-4 h-4 text-emerald-400"></i>
+            <span data-i18n="skills_security">Security, Dev Environment &amp; Core</span>
+          </h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4">
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="90">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/git.svg" class="skill-ring-icon" alt="Git" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Git / GitHub</div>
+              <span class="badge-tech !text-[10px]">CI/CD &amp; Workflows</span>
+            </div>
+
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="95">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/android.svg" class="skill-ring-icon" alt="Android" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Android / Termux</div>
+              <span class="badge-tech !text-[10px]">CLI Environment</span>
+            </div>
+
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="70">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/kalilinux.svg" class="skill-ring-icon" alt="Kali Linux" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Kali Linux</div>
+              <span class="badge-tech !text-[10px]">Pentesting / OS</span>
+            </div>
+
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="90">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/windows.svg" class="skill-ring-icon" alt="Windows" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Windows</div>
+              <span class="badge-tech !text-[10px]">System Admin &amp; Core</span>
+            </div>
+
+            <!-- Bash -->
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="40">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/bash.svg" class="skill-ring-icon" alt="Bash" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Bash / Shell</div>
+              <span class="badge-tech !text-[10px]">CLI / Automation</span>
+            </div>
+
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="82">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/pentest.svg" class="skill-ring-icon" alt="Web PenTesting" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Web PenTesting</div>
+              <span class="badge-tech !text-[10px]">OWASP / Audits</span>
+            </div>
+
+            <div class="linear-card tilt-enabled p-4 text-center reveal-card skill-card" data-percent="95">
+              <div class="skill-ring-wrap">
+                <svg class="skill-ring-svg" viewBox="0 0 80 80">
+                  <circle class="skill-ring-bg" cx="40" cy="40" r="36" />
+                  <circle class="skill-ring-progress" cx="40" cy="40" r="36" />
+                </svg>
+                <div class="skill-ring-center">
+                  <img src="assets/skills/arabic.svg" class="skill-ring-icon" alt="Arabic RTL UI" />
+                  <span class="skill-percent-number">0%</span>
+                </div>
+              </div>
+              <div class="font-medium text-sm text-slate-200 mb-1">Arabic RTL UI</div>
+              <span class="badge-tech !text-[10px]">Localization</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section (6 Production Projects with Real Visual Assets) -->
+    <section id="projects" class="py-16 md:py-24 border-b border-slate-800/80">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center justify-between mb-12">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest mb-1">
+              <i data-lucide="folder-git-2" class="w-4 h-4"></i>
+              <span data-i18n="projects_tag">Featured Engineering</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-100" data-i18n="projects_title">Production Systems &amp; Projects</h2>
+          </div>
+          <span class="hidden md:inline-flex text-xs font-mono text-slate-400 border border-slate-800 bg-slate-900/60 px-3 py-1.5 rounded-lg" data-i18n="projects_badge">
+            4 Case Studies
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- 1. Athkar App -->
+          <div class="linear-card tilt-enabled p-6 reveal-card flex flex-col justify-between group">
+            <div>
+              <div class="relative h-44 w-full rounded-xl overflow-hidden bg-slate-950 border border-slate-800/80 mb-5 flex items-center justify-center">
+                <img src="assets/projects/athkar.png" alt="Athkar App" class="project-logo w-full h-full object-cover transition duration-300 group-hover:scale-105" />
+                <span class="absolute top-3 right-3 text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-slate-900/90 text-emerald-400 border border-emerald-500/30 backdrop-blur-md">
+                  PWA / Mobile
+                </span>
+              </div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-lg font-semibold text-slate-100 group-hover:text-emerald-400 transition-colors" data-i18n="proj1_title">1. Athkar App (حصن المسلم)</h3>
+              </div>
+              <p class="text-xs font-mono text-slate-400 mb-3" data-i18n="proj1_sub">Islamic Athkar Application — PWA + Capacitor</p>
+              <p class="text-sm text-slate-400 leading-relaxed font-sans mb-4" data-i18n="proj1_desc">
+                Comprehensive Islamic Athkar PWA built entirely from mobile environment (HTML/CSS/JS + Capacitor). Features interactive 3D digital tasbih, dedicated deceased remembrance section for continuous charity, and complete offline-first support.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800/60">
+              <span class="badge-tech">PWA</span>
+              <span class="badge-tech">Capacitor</span>
+              <span class="badge-tech">JavaScript</span>
+              <span class="badge-tech">Offline-First</span>
+            </div>
+          </div>
+
+          <!-- 2. Gahez Delivery App -->
+          <div class="linear-card tilt-enabled p-6 reveal-card flex flex-col justify-between group">
+            <div>
+              <div class="relative h-44 w-full rounded-xl overflow-hidden bg-slate-950 border border-slate-800/80 mb-5 flex items-center justify-center">
+                <img src="assets/projects/gahez.jpg" alt="Gahez App" class="project-logo w-full h-full object-cover transition duration-300 group-hover:scale-105" />
+                <span class="absolute top-3 right-3 text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-slate-900/90 text-emerald-400 border border-emerald-500/30 backdrop-blur-md">
+                  Flutter App
+                </span>
+              </div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-lg font-semibold text-slate-100 group-hover:text-emerald-400 transition-colors" data-i18n="proj2_title">2. Gahez Delivery App (جاهز)</h3>
+              </div>
+              <p class="text-xs font-mono text-slate-400 mb-3" data-i18n="proj2_sub">White-Label Restaurant Delivery — Al-Ameer Fish Restaurant</p>
+              <p class="text-sm text-slate-400 leading-relaxed font-sans mb-4" data-i18n="proj2_desc">
+                Custom white-label food delivery application for Al-Ameer Fish Restaurant. Built with Flutter and Dart, backed by Firebase cloud database, and integrated with Node.js/OneSignal real-time push notification engine — supervised by Abdullah Amir.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800/60">
+              <span class="badge-tech">Flutter</span>
+              <span class="badge-tech">Dart</span>
+              <span class="badge-tech">Firebase</span>
+              <span class="badge-tech">Node.js</span>
+              <span class="badge-tech">OneSignal</span>
+            </div>
+          </div>
+
+          <!-- 3. Noon Pharma Platform -->
+          <div class="linear-card tilt-enabled p-6 reveal-card flex flex-col justify-between group">
+            <div>
+              <div class="relative h-44 w-full rounded-xl overflow-hidden bg-slate-950 border border-slate-800/80 mb-5 flex items-center justify-center">
+                <img src="assets/projects/noon.jpg" alt="Noon Pharma" class="project-logo w-full h-full object-cover transition duration-300 group-hover:scale-105" />
+                <span class="absolute top-3 right-3 text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-slate-900/90 text-indigo-400 border border-indigo-500/30 backdrop-blur-md">
+                  E-Commerce + AI
+                </span>
+              </div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-lg font-semibold text-slate-100 group-hover:text-emerald-400 transition-colors" data-i18n="proj3_title">3. Noon Pharma (نون للصناعات الدوائية)</h3>
+              </div>
+              <p class="text-xs font-mono text-slate-400 mb-3" data-i18n="proj3_sub">Pharmaceutical E-Commerce &amp; AI Consultant Platform</p>
+              <p class="text-sm text-slate-400 leading-relaxed font-sans mb-4" data-i18n="proj3_desc">
+                Complete pharmaceutical e-commerce platform built with Vanilla JS, Node.js/Express backend, and Firebase. Features 'Noon AI' intelligent chatbot powered by Gemini models for dosage advice, plus an administrative dashboard for catalog and sales control.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800/60">
+              <span class="badge-tech">Vanilla JS</span>
+              <span class="badge-tech">Node.js</span>
+              <span class="badge-tech">Firebase</span>
+              <span class="badge-tech">Gemini AI</span>
+            </div>
+          </div>
+
+          <!-- 4. Fuel Station System -->
+          <div class="linear-card tilt-enabled p-6 reveal-card flex flex-col justify-between group">
+            <div>
+              <div class="relative h-44 w-full rounded-xl overflow-hidden bg-slate-950 border border-slate-800/80 mb-5 flex items-center justify-center">
+                <img src="assets/projects/fuel_station.png" alt="Fuel Station Pro" class="project-logo w-full h-full object-cover transition duration-300 group-hover:scale-105" />
+                <span class="absolute top-3 right-3 text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-slate-900/90 text-slate-300 border border-slate-700 backdrop-blur-md">
+                  Operations Suite
+                </span>
+              </div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-lg font-semibold text-slate-100 group-hover:text-emerald-400 transition-colors" data-i18n="proj4_title">4. Fuel Station Pro (نظام إدارة محطة وقود)</h3>
+              </div>
+              <p class="text-xs font-mono text-slate-400 mb-3" data-i18n="proj4_sub">Operations, Real-time Tanks &amp; Daily Sales System</p>
+              <p class="text-sm text-slate-400 leading-relaxed font-sans mb-4" data-i18n="proj4_desc">
+                Comprehensive enterprise management platform for fuel station operations. Tracks real-time tank storage, records daily meter readings, logs cashier shift handovers, and generates detailed financial analytics preventing operational discrepancy.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800/60">
+              <span class="badge-tech">System Architecture</span>
+              <span class="badge-tech">Inventory</span>
+              <span class="badge-tech">Analytics</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-16 md:py-24 border-b border-slate-800/80">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest mb-1">
+          <i data-lucide="briefcase" class="w-4 h-4"></i>
+          <span data-i18n="exp_tag">Career Path</span>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-bold text-slate-100 mb-12" data-i18n="exp_title">Professional Work Experience</h2>
+
+        <div class="space-y-6">
+          <!-- Soft Zone -->
+          <div class="linear-card tilt-enabled p-6 reveal-card">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+              <div>
+                <h3 class="text-lg font-semibold text-slate-100" data-i18n="exp1_title">SOFT ZONE</h3>
+                <p class="text-sm font-medium text-emerald-400" data-i18n="exp1_role">Front End &amp; Digital Solutions Developer</p>
+              </div>
+              <span class="text-xs font-mono text-slate-400 bg-slate-950 border border-slate-800 px-3 py-1 rounded-full w-fit" data-i18n="exp1_date">
+                March 2024 — Present
+              </span>
+            </div>
+            <p class="text-sm text-slate-400 leading-relaxed font-sans" data-i18n="exp1_desc">
+              Founded and architected the Soft Zone web platform designed to streamline digital transactions and service access. Built reactive user interfaces, implemented electronic payment flows, and structured reliable customer portals ensuring responsive cross-device usability.
+            </p>
+          </div>
+
+          <!-- WebNote -->
+          <div class="linear-card tilt-enabled p-6 reveal-card">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+              <div>
+                <h3 class="text-lg font-semibold text-slate-100" data-i18n="exp2_title">WebNote</h3>
+                <p class="text-sm font-medium text-emerald-400" data-i18n="exp2_role">Web Developer</p>
+              </div>
+              <span class="text-xs font-mono text-slate-400 bg-slate-950 border border-slate-800 px-3 py-1 rounded-full w-fit" data-i18n="exp2_date">
+                April 2024 — March 2025
+              </span>
+            </div>
+            <p class="text-sm text-slate-400 leading-relaxed font-sans" data-i18n="exp2_desc">
+              Engineered and maintained responsive web applications, implementing front-end features using HTML, CSS, and modern JavaScript. Collaborated with designers to refine user flow, optimize rendering speeds, and enforce cross-browser standardization.
+            </p>
+          </div>
+
+          <!-- Freelance -->
+          <div class="linear-card tilt-enabled p-6 reveal-card">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+              <div>
+                <h3 class="text-lg font-semibold text-slate-100" data-i18n="exp3_title">Freelance &amp; Engineering Collaborations</h3>
+                <p class="text-sm font-medium text-emerald-400" data-i18n="exp3_role">Full-Stack Web Developer &amp; UI Specialist</p>
+              </div>
+              <span class="text-xs font-mono text-slate-400 bg-slate-950 border border-slate-800 px-3 py-1 rounded-full w-fit" data-i18n="exp3_date">
+                April 2024 — August 2025
+              </span>
+            </div>
+            <p class="text-sm text-slate-400 leading-relaxed font-sans" data-i18n="exp3_desc">
+              Collaborated on client-facing applications and digital tools. Delivered modern landing systems, integrated backend REST APIs, and implemented bespoke Arabic RTL interfaces, ensuring robust performance and clean code maintainability.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education & Certifications Section -->
+    <section id="certifications" class="py-16 md:py-24 border-b border-slate-800/80">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <!-- Education Column -->
+          <div class="lg:col-span-6 space-y-6">
+            <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest">
+              <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+              <span data-i18n="edu_tag">Academic Degrees</span>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-100" data-i18n="edu_title">Formal Education</h2>
+
+            <div class="linear-card tilt-enabled p-6 reveal-card">
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <h3 class="text-base font-semibold text-slate-100" data-i18n="edu1_degree">Bachelor's in Information Technology</h3>
+                <span class="text-xs font-mono text-emerald-400" data-i18n="edu1_date">2018 — 2025</span>
+              </div>
+              <p class="text-xs font-mono text-slate-400 mb-3" data-i18n="edu1_school">University of Al-butana — Faculty of Computer Science &amp; IT</p>
+              <p class="text-sm text-slate-400 leading-relaxed font-sans" data-i18n="edu1_desc">
+                Completed undergraduate degree specializing in Information Systems. Gained comprehensive theoretical and practical expertise in software engineering, database design, system architecture, algorithm optimization, and artificial intelligence, culminating in an advanced deep learning graduation project.
+              </p>
+            </div>
+
+            <div class="linear-card tilt-enabled p-6 reveal-card">
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <h3 class="text-base font-semibold text-slate-100" data-i18n="edu2_degree">Secondary Education (Scientific Section)</h3>
+                <span class="text-xs font-mono text-slate-400" data-i18n="edu2_date">2014 — 2018</span>
+              </div>
+              <p class="text-xs font-mono text-slate-400 mb-3" data-i18n="edu2_school">Miheila &amp; Al-Sharif Al-Dasis Secondary Schools</p>
+              <p class="text-sm text-slate-400 leading-relaxed font-sans" data-i18n="edu2_desc">
+                Completed secondary school education with focus on scientific and mathematical curriculum, establishing strong analytical thinking and quantitative fundamentals.
+              </p>
+            </div>
+          </div>
+
+          <!-- Verified Certifications Column -->
+          <div class="lg:col-span-6 space-y-6">
+            <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest">
+              <i data-lucide="award" class="w-4 h-4"></i>
+              <span data-i18n="cert_tag">Accredited Learning</span>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-100" data-i18n="cert_title">Verified Certifications</h2>
+
+            <!-- Cert 1 -->
+            <div class="linear-card tilt-enabled p-6 reveal-card flex flex-col justify-between">
+              <div>
+                <div class="flex items-start justify-between gap-3 mb-2">
+                  <h3 class="text-base font-semibold text-slate-100 leading-snug" data-i18n="cert1_title">
+                    Speak English Professionally: In Person, Online &amp; On the Phone
+                  </h3>
+                  <span class="text-emerald-400 shrink-0">
+                    <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                  </span>
+                </div>
+                <p class="text-xs font-mono text-slate-400 mb-3 flex items-center gap-1.5" data-i18n="cert1_org">
+                  <i data-lucide="building" class="w-3.5 h-3.5 text-emerald-400"></i>
+                  Georgia Institute of Technology (Coursera)
+                </p>
+                <p class="text-sm text-slate-400 leading-relaxed mb-4" data-i18n="cert1_desc">
+                  Mastering fluent professional English communication, executive telephone correspondence, international video conferences, presentation skills, and cross-cultural business discussions.
+                </p>
+              </div>
+              <div class="pt-3 border-t border-slate-800/60 flex items-center justify-between">
+                <span class="text-xs font-mono text-slate-400">ID: WN1V834A7141</span>
+                <a href="https://www.coursera.org/account/accomplishments/verify/WN1V834A7141" target="_blank" rel="noopener noreferrer" class="btn-verify">
+                  <span data-i18n="cert1_verify">Verify</span>
+                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Cert 2 -->
+            <div class="linear-card tilt-enabled p-6 reveal-card flex flex-col justify-between">
+              <div>
+                <div class="flex items-start justify-between gap-3 mb-2">
+                  <h3 class="text-base font-semibold text-slate-100 leading-snug" data-i18n="cert2_title">
+                    Write Professional Emails in English
+                  </h3>
+                  <span class="text-emerald-400 shrink-0">
+                    <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                  </span>
+                </div>
+                <p class="text-xs font-mono text-slate-400 mb-3 flex items-center gap-1.5" data-i18n="cert2_org">
+                  <i data-lucide="building" class="w-3.5 h-3.5 text-emerald-400"></i>
+                  Coursera
+                </p>
+                <p class="text-sm text-slate-400 leading-relaxed mb-4" data-i18n="cert2_desc">
+                  Advanced training in writing high-impact professional emails, formal business inquiries, proposals, strategic announcements, and polite negotiations in international workplace contexts.
+                </p>
+              </div>
+              <div class="pt-3 border-t border-slate-800/60 flex items-center justify-between">
+                <span class="text-xs font-mono text-slate-400">ID: L77TF9TQ17F8</span>
+                <a href="https://www.coursera.org/account/accomplishments/verify/L77TF9TQ17F8" target="_blank" rel="noopener noreferrer" class="btn-verify">
+                  <span data-i18n="cert2_verify">Verify</span>
+                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials / References Section -->
+    <section id="testimonials" class="py-16 md:py-24 border-b border-slate-800/80">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest mb-1">
+          <i data-lucide="quote" class="w-4 h-4"></i>
+          <span data-i18n="test_tag">Client &amp; Peer Endorsements</span>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-bold text-slate-100 mb-12" data-i18n="test_title">Professional References</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- 1. Abubakar Ahmed Al-Amin -->
+          <div class="linear-card tilt-enabled p-6 reveal-card flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-3.5 mb-4">
+                <img src="images/koont.jpg" alt="Abubakar Ahmed Al-Amin" class="w-12 h-12 rounded-full border border-slate-700 object-cover bg-slate-950" />
+                <div>
+                  <h3 class="text-base font-semibold text-slate-100" data-i18n="test1_name">Abubakar Ahmed Al-Amin</h3>
+                  <p class="text-xs font-mono text-emerald-400" data-i18n="test1_role">Owner — Koont Store</p>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300 leading-relaxed mb-4 font-sans" data-i18n="test1_quote">
+                "Abubakar Ahmed Al-Amin, Owner of Koont Store, commended the quality of my work and professionalism in delivering digital projects, affirming my dedication to follow-ups and rapid resolution of any technical issues."
+              </p>
+            </div>
+            <div class="text-[11px] font-mono text-slate-400 pt-3 border-t border-slate-800/60" data-i18n="test1_sub">
+              E-Commerce Client Endorsement
+            </div>
+          </div>
+
+          <!-- 2. Abdullah Amir -->
+          <div class="linear-card tilt-enabled p-6 reveal-card flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-3.5 mb-4">
+                <img src="images/gahez-logo.svg" alt="Gahez Delivery App — Abdullah Amir" class="w-12 h-12 rounded-full border border-emerald-500/40 object-cover bg-slate-950 p-0.5 shadow-md shadow-emerald-950/40" />
+                <div>
+                  <h3 class="text-base font-semibold text-slate-100" data-i18n="test2_name">Abdullah Amir (عبدالله أمير)</h3>
+                  <p class="text-xs font-mono text-emerald-400" data-i18n="test2_role">Gahez Project / Al-Ameer Restaurant</p>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300 leading-relaxed mb-4 font-sans" data-i18n="test2_quote">
+                "Abdullah Amir commended the high quality and technical delivery of the Gahez application, emphasizing my continuous commitment to resolving technical issues and maintaining smooth project progression."
+              </p>
+            </div>
+            <div class="text-[11px] font-mono text-slate-400 pt-3 border-t border-slate-800/60" data-i18n="test2_sub">
+              Gahez Restaurant Project Lead
+            </div>
+          </div>
+
+          <!-- 3. Qtada Ahmed -->
+          <div class="linear-card tilt-enabled p-6 reveal-card flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-3.5 mb-4">
+                <img src="images/reference-image-2.jpg" alt="Qtada Ahmed" class="w-12 h-12 rounded-full border border-slate-700 object-cover bg-slate-950" />
+                <div>
+                  <h3 class="text-base font-semibold text-slate-100" data-i18n="test3_name">Qtada Ahmed</h3>
+                  <p class="text-xs font-mono text-emerald-400" data-i18n="test3_role">QTADA GM LLC — Digital Solution</p>
+                </div>
+              </div>
+              <p class="text-sm text-slate-400 leading-relaxed mb-4 font-sans" data-i18n="test3_quote">
+                "Mr. Qtada Ahmed praised my work quality and professionalism in delivering digital projects and collaborating within the team, contributing to systems that streamlined operations."
+              </p>
+            </div>
+            <div class="text-[11px] font-mono text-slate-400 pt-3 border-t border-slate-800/60" data-i18n="test3_sub">
+              Digital Solution Executive
+            </div>
+          </div>
+
+          <!-- 4. Qusai Ghazi -->
+          <div class="linear-card tilt-enabled p-6 reveal-card flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-3.5 mb-4">
+                <img src="images/reference-image-3.jpg" alt="Qusai Ghazi" class="w-12 h-12 rounded-full border border-slate-700 object-cover bg-slate-950" />
+                <div>
+                  <h3 class="text-base font-semibold text-slate-100" data-i18n="test4_name">Qusai Ghazi</h3>
+                  <p class="text-xs font-mono text-emerald-400" data-i18n="test4_role">Chief Creative Officer — Epic Studio</p>
+                </div>
+              </div>
+              <p class="text-sm text-slate-400 leading-relaxed mb-4 font-sans" data-i18n="test4_quote">
+                "Mr. Qusai Ghazi praised my creativity and technical execution in delivering professional UI and web solutions, highlighting my commitment and high work standard."
+              </p>
+            </div>
+            <div class="text-[11px] font-mono text-slate-400 pt-3 border-t border-slate-800/60" data-i18n="test4_sub">
+              Creative Director Endorsement
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 md:py-24">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div class="lg:col-span-5 space-y-4">
+            <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest">
+              <i data-lucide="message-square" class="w-4 h-4"></i>
+              <span data-i18n="contact_tag">Direct Communication</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-100" data-i18n="contact_title">
+              Let's engineer something exceptional together.
+            </h2>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6 font-sans" data-i18n="contact_desc">
+              Have a software engineering role, consulting project, or technical question? Send a message and I'll get back to you promptly.
+            </p>
+
+            <div class="space-y-4 pt-4 border-t border-slate-800/80 text-sm">
+              <div class="flex items-center gap-3 text-slate-300">
+                <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400 shrink-0">
+                  <i data-lucide="mail" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <div class="text-xs text-slate-400" data-i18n="contact_email_lbl">Email:</div>
+                  <a href="mailto:alrafeaalimam@gmail.com" class="font-mono text-slate-200 hover:text-emerald-400">alrafeaalimam@gmail.com</a>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 text-slate-300">
+                <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400 shrink-0">
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <div class="text-xs text-slate-400" data-i18n="contact_phone_lbl">Phone:</div>
+                  <a href="tel:+249115715672" class="font-mono text-slate-200 hover:text-emerald-400" dir="ltr">+249 115 715 672</a>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 text-slate-300">
+                <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400 shrink-0">
+                  <i data-lucide="map-pin" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <div class="text-xs text-slate-400" data-i18n="contact_loc_lbl">Location:</div>
+                  <div class="text-slate-200" data-i18n="contact_loc_val">Village of Miheila, Al-Gezira, Sudan</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Card -->
+          <div class="lg:col-span-7 linear-card p-6 md:p-8 reveal-card">
+            <form action="https://formsubmit.co/alrafeaalimam@gmail.com" method="POST" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-mono text-slate-400 mb-1.5 uppercase tracking-wider" data-i18n="form_name_lbl">Your Name</label>
+                  <input type="text" name="name" required placeholder="Full Name" data-i18n-placeholder="form_name_ph" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500 transition duration-150" />
+                </div>
+                <div>
+                  <label class="block text-xs font-mono text-slate-400 mb-1.5 uppercase tracking-wider" data-i18n="form_email_lbl">Email Address</label>
+                  <input type="email" name="_replyto" required placeholder="name@example.com" data-i18n-placeholder="form_email_ph" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500 transition duration-150" />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-mono text-slate-400 mb-1.5 uppercase tracking-wider" data-i18n="form_subject_lbl">Subject</label>
+                <input type="text" name="Subject" required placeholder="Project or Opportunity Details" data-i18n-placeholder="form_subject_ph" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500 transition duration-150" />
+              </div>
+
+              <div>
+                <label class="block text-xs font-mono text-slate-400 mb-1.5 uppercase tracking-wider" data-i18n="form_msg_lbl">Message</label>
+                <textarea name="message" rows="4" required placeholder="Write your message here..." data-i18n-placeholder="form_msg_ph" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500 transition duration-150 resize-none"></textarea>
+              </div>
+
+              <button type="submit" class="btn-emerald w-full !py-3">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span data-i18n="form_send_btn">Send Message</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-slate-800/80 bg-slate-950 text-center text-xs text-slate-400 font-mono">
+      <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div data-i18n="footer_copy">
+          &copy; 2026 Alrafei Babiker. Designed with Linear &amp; Stripe Aesthetic.
+        </div>
+        <div class="flex items-center gap-4 text-slate-400">
+          <a href="https://github.com/Alrafeaalimam" target="_blank" rel="noopener noreferrer" class="hover:text-slate-100 transition-colors">GitHub</a>
+          <a href="https://www.linkedin.com/in/alrafea-alimamali-mustafa-727635421" target="_blank" rel="noopener noreferrer" class="hover:text-slate-100 transition-colors">LinkedIn</a>
+          <a href="https://x.com/AliAlrafea?t=9ATUQSFYN2O2PAlLKUfnmw&s=09" target="_blank" rel="noopener noreferrer" class="hover:text-slate-100 transition-colors">Twitter</a>
+          <a href="#top" class="hover:text-emerald-400 transition-colors flex items-center gap-1"><span data-i18n="footer_back_top">Back to Top</span> <i data-lucide="arrow-up" class="w-3 h-3"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/translations.js?ver=3.7.0"></script>
+    <script src="js/lucide.min.js"></script>
+    <script src="js/three.min.js"></script>
+    <script src="js/custom-3d.js?ver=3.7.0"></script>
+  </body>
+</html>
